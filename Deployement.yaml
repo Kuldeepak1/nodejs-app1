@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nodejs-kubernetes
+  name: nodejs-kubernetes
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nodejs-kubernetes
+    spec:
+      containers:
+      - env:
+        - name: MONGO_DB_URL
+          value: mongodb://nodejs-kubernetes-mongodb:27017/nodejs-kubernetes
+        - name: PORT
+          value: "80"
+        image: local-nodejs-kubernetes
+        name: nodejs-kubernetes
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
